@@ -105,3 +105,13 @@ BEGIN
 END //
 DELIMITER ;
 CALL sp_AdicionarLivro('A Guerra dos Tronos', 1, 2022, 200, 2);
+
+DELIMITER //
+CREATE PROCEDURE sp_AutorMaisAntigo()
+BEGIN
+    SELECT Nome, Sobrenome
+    FROM Autor
+    WHERE Data_Nascimento = (SELECT MIN(Data_Nascimento) FROM Autor);
+END //
+DELIMITER ;
+CALL sp_AutorMaisAntigo();
