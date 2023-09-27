@@ -28,3 +28,21 @@ END //
 DELIMITER ;
 CALL sp_ContarLivrosPorCategoria('Ciência');
 
+DELIMITER //
+CREATE PROCEDURE sp_VerificarLivrosCategoria(IN categoriaNome VARCHAR(100))
+BEGIN
+    DECLARE contador INT;
+    
+    SELECT COUNT(Livro.Titulo) INTO contador
+    FROM Livro
+    INNER JOIN Categoria ON Livro.Categoria_ID = Categoria.Categoria_ID
+    WHERE Categoria.Nome = categoriaNome;
+    
+    IF contador > 0 THEN
+        SELECT 'Existem livros nesta categoria.' AS Mensagem;
+    ELSE
+        SELECT 'Não existem livros nesta categoria.' AS Mensagem;
+    END IF;
+END //
+DELIMITER ;
+CALL sp_VerificarLivrosCategoria('Ficção Científica');
