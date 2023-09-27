@@ -115,3 +115,20 @@ BEGIN
 END //
 DELIMITER ;
 CALL sp_AutorMaisAntigo();
+
+-- Define um novo delimitador para permitir o uso de ';' dentro da procedure
+DELIMITER //
+
+-- Cria a stored procedure
+CREATE PROCEDURE sp_AutorMaisAntigo()
+BEGIN
+    -- Seleciona os campos Nome e Sobrenome da tabela Autor
+    -- onde a Data de Nascimento é igual à data de nascimento mínima
+    -- obtida de outra subconsulta na tabela Autor.
+    SELECT Nome, Sobrenome
+    FROM Autor
+    WHERE Data_Nascimento = (SELECT MIN(Data_Nascimento) FROM Autor);
+END //
+
+-- Restaure o delimitador padrão
+DELIMITER ;
